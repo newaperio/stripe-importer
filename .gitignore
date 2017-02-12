@@ -1,0 +1,6 @@
+/node_modules
+/webhooks
+/xero_keys
+/secrets*.yml
+!/secrets.example.yml
+/.serverless

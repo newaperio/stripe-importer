@@ -1,0 +1,17 @@
+{
+  "name": "stripe-importer",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to import Stripe transactions to Xero",
+  "repository": "https://github.com/newaperio/stripe-importer",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "logs": "serverless logs -f stripeImporter -t"
+  },
+  "author": "Logan Leger",
+  "license": "MIT",
+  "dependencies": {
+    "stripe": "^4.15.0",
+    "xero": "0.0.8"
+  }
+}

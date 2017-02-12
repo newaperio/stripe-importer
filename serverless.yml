@@ -1,0 +1,47 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: stripe-importer
+
+frameworkVersion: "=1.6.1"
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  environment:
+    STRIPE_API_KEY: ${self:custom.secrets.STRIPE_API_KEY}
+    XERO_CONSUMER_KEY: ${self:custom.secrets.XERO_CONSUMER_KEY}
+    XERO_CONSUMER_SECRET: ${self:custom.secrets.XERO_CONSUMER_SECRET}
+    XERO_STRIPE_ACCOUNT_CODE: ${self:custom.secrets.XERO_STRIPE_ACCOUNT_CODE}
+    XERO_STRIPE_FEE_ACCOUNT_CODE: ${self:custom.secrets.XERO_STRIPE_FEE_ACCOUNT_CODE}
+    XERO_STRIPE_TRANSFER_ACCOUNT_CODE: ${self:custom.secrets.XERO_STRIPE_TRANSFER_ACCOUNT_CODE}
+    XERO_SALES_ACCOUNT_CODE: ${self:custom.secrets.XERO_SALES_ACCOUNT_CODE}
+
+functions:
+  stripeImporter:
+    handler: handler.stripeImporter
+    events:
+      - http:
+          path: stripe/xero
+          method: post
+
+package:
+  exclude:
+    - webhooks/**
+    - xero_keys/**
+    - secrets.example.yml
+  include:
+    - xero_keys/privatekey.pem
+
+custom:
+  secrets: ${file(secrets.${opt:stage, self:provider.stage}.yml)}

@@ -25,7 +25,8 @@ function handleCharge(data) {
           },
           LineItems: [
             {
-              Description: data.object.description,
+              Description: data.object.description == undefined ?
+                customer.description : data.object.description,
               UnitAmount: (data.object.amount / 100),
               AccountCode: process.env.XERO_SALES_ACCOUNT_CODE,
             },
